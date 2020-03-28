@@ -3,5 +3,14 @@ services:
     - docker
 
 script:
-    - docker build -t rolandbudai/node .
-    - docker images rolandbudai/node
+    - docker build -t rolandbudai/node-docker-ci .
+    - docker images rolandbudai/node-docker-ci
+
+before_deploy:
+    - docker login -u rolandbudai -p 463284e5-20f1-4b08-97d6-aff7a133b7a2
+
+deploy:
+    provider: script
+    script: docker push rolandbudai/node-docker-ci
+    on:
+        branch: master
